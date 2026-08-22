@@ -1,0 +1,4 @@
+/* MUI CssBaseline handles resets; keep app-wide overrides here. */
+#root {
+  min-height: 100vh;
+}
