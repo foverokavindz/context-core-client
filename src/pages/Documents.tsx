@@ -2,19 +2,19 @@ import PageShellLayout from '../layouts/PageShellLayout';
 import PageTitleBar from '../components/PageTitleBar';
 import ComingSoonPlaceholder from '../components/ComingSoonPlaceholder';
 
-function Dashboard() {
+function Documents() {
 	return (
 		<PageShellLayout
 			header={
 				<PageTitleBar
-					title="Dashboard"
-					subtitle="Overview of your organizational knowledge and connected systems."
+					title="Documents"
+					subtitle="Manage internal documents available to your organization's knowledge system."
 				/>
 			}
 		>
-			<ComingSoonPlaceholder label="Dashboard" />
+			<ComingSoonPlaceholder label="Documents" />
 		</PageShellLayout>
 	);
 }
 
-export default Dashboard;
+export default Documents;

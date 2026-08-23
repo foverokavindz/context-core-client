@@ -1,29 +1,25 @@
 import { Outlet } from 'react-router-dom';
-import Box from '@mui/material/Box';
 import type { ReactNode } from 'react';
+import { StyledMainLayoutRoot, StyledMainContentBox, StyledOutletBox } from './MainLayout.styled.component';
 
 interface MainLayoutProps {
   sidebar: ReactNode;
+  topBar: ReactNode;
 }
 
-function MainLayout({ sidebar }: MainLayoutProps) {
+function MainLayout({ sidebar, topBar }: MainLayoutProps) {
   return (
-    <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+    <StyledMainLayoutRoot>
       {sidebar}
 
       {/* Main Content Area */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          minWidth: 0,
-          minHeight: '100vh',
-          transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-        }}
-      >
-        <Outlet />
-      </Box>
-    </Box>
+      <StyledMainContentBox component="main">
+        {topBar}
+        <StyledOutletBox>
+          <Outlet />
+        </StyledOutletBox>
+      </StyledMainContentBox>
+    </StyledMainLayoutRoot>
   );
 }
 

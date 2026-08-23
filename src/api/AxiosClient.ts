@@ -1,6 +1,6 @@
 import axios, { AxiosError, type AxiosInstance } from 'axios';
 import type { IApiClient } from './IApiClient';
-import { apiConfig } from '../configs/api.config';
+import { apiConfig } from '../configs/api.configs';
 import type { ApiClientConfig, ApiResponse, ClientTypeMap } from '../types/api.types';
 
 export class AxiosClient implements IApiClient {

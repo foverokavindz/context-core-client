@@ -2,10 +2,65 @@ import { createTheme } from '@mui/material/styles';
 
 const FONT_PRIMARY = 'Inter, sans-serif';
 
+// Design tokens carried over 1:1 from the Context Core mockup's --m-* theme
+// (theme-modern.css) that don't map cleanly onto MUI's palette/shadow slots -
+// e.g. 3 ink levels, 5 surface levels, and a soft dual-shadow elevation
+// system. Addressed via `theme.tokens.*` instead of stretching Palette.
+export interface ThemeTokens {
+	ink2: string;
+	ink3: string;
+	surfacePage: string;
+	surfaceRaised: string;
+	surfaceSunken: string;
+	surfaceInset: string;
+	surfaceSidebar: string;
+	lineStrong: string;
+	accentTint: string;
+	accentTintStrong: string;
+	positiveTint: string;
+	warningTint: string;
+	criticalTint: string;
+	radius: {
+		sm: number;
+		md: number;
+		lg: number;
+		xl: number;
+		'2xl': number;
+		'3xl': number;
+	};
+	fontSize: {
+		'3xs': number;
+		'2xs': number;
+		xs: number;
+		sm: number;
+		md: number;
+		lg: number;
+		xl: number;
+		'2xl': number;
+		'3xl': number;
+		// Prominent one-off headings (e.g. chat welcome title) that fall outside
+		// the ascending UI-chrome ladder above.
+		heading: number;
+	};
+	elevation: {
+		0: string;
+		1: string;
+		2: string;
+		3: string;
+		inset: string;
+	};
+	motion: {
+		ease: string;
+		durHover: string;
+		durEnter: string;
+	};
+}
+
 // Extending palette interface to include custom colors
 declare module '@mui/material/styles' {
 	interface Palette {
 		border: Palette['primary'];
+		accent: Palette['primary'];
 		// hover: {
 		// 	primary: string;
 		// 	secondary?: string;
@@ -13,22 +68,28 @@ declare module '@mui/material/styles' {
 	}
 	interface PaletteOptions {
 		border?: PaletteOptions['primary'];
+		accent?: PaletteOptions['primary'];
 		// hover?: {
 		// 	primary?: string;
 		// 	secondary?: string;
 		// };
+	}
+	interface Theme {
+		tokens: ThemeTokens;
+	}
+	interface ThemeOptions {
+		tokens?: ThemeTokens;
 	}
 }
 export const theme = createTheme({
 	palette: {
 		mode: 'light',
 
-		// Primary Main action color for buttons, CTAs
 		primary: {
-			main: '#212121',
-			light: '#484848',
-			dark: '#333333EE',
-			contrastText: '#FFFFFF',
+			main: '#14171b',
+			light: '#4e5359',
+			dark: '#000000',
+			contrastText: '#fafafa',
 		},
 
 		// Secondary actions, outlined buttons
@@ -39,20 +100,17 @@ export const theme = createTheme({
 			contrastText: '#212121',
 		},
 
-		// Background colors
 		background: {
-			default: '#FFFFFF',
-			paper: '#f9f9f9ff',
+			default: '#f9fafb',
+			paper: '#ffffff',
 		},
 
-		// Text colors
 		text: {
-			primary: '#212121',
-			secondary: '#757575',
+			primary: '#14171b',
+			secondary: '#757b81',
 			disabled: '#BDBDBD',
 		},
 
-		// Semantic colors (status indicators)
 		success: {
 			main: '#4CAF50',
 			light: '#81C784',
@@ -89,14 +147,23 @@ export const theme = createTheme({
 			hoverOpacity: 0.08,
 		},
 
-		// Dividers and borders
-		divider: '#E0E0E0',
+		// Dividers and borders (--m-line)
+		divider: '#e3e5e8',
 
 		// Custom palette extensions
 		border: {
 			main: '#E0E0E0',
 			light: '#F5F5F5',
 			dark: '#BDBDBD',
+		},
+
+		// Accent (--m-accent*): tinted-fill indigo used for active nav state,
+		// icon chips and focus rings — never a full-saturation block.
+		accent: {
+			main: '#3f69d3',
+			light: 'rgba(63, 105, 211, 0.10)',
+			dark: '#1e41a8',
+			contrastText: '#FFFFFF',
 		},
 	},
 	typography: {
@@ -171,7 +238,58 @@ export const theme = createTheme({
 		},
 	},
 	shape: {
-		borderRadius: 22,
+		borderRadius: 10,
+	},
+	tokens: {
+		ink2: '#4e5359',
+		ink3: '#757b81',
+		surfacePage: '#f9fafb',
+		surfaceRaised: '#ffffff',
+		surfaceSunken: '#f3f5f6',
+		surfaceInset: '#f5f7f9',
+		surfaceSidebar: '#fafbfc',
+		lineStrong: '#d1d5d8',
+		accentTint: 'rgba(63, 105, 211, 0.10)',
+		accentTintStrong: 'rgba(63, 105, 211, 0.18)',
+		positiveTint: 'rgba(15, 160, 92, 0.12)',
+		warningTint: 'rgba(228, 158, 34, 0.14)',
+		criticalTint: 'rgba(231, 0, 11, 0.10)',
+		radius: {
+			sm: 6,
+			md: 8,
+			lg: 10,
+			xl: 14,
+			'2xl': 18,
+			'3xl': 22,
+		},
+		// Micro type ladder for UI chrome (nav labels, badges, meta text) — the
+		// mockup's --m-* tokens don't define a font-size scale, so these are the
+		// distinct sizes actually used across TopBar/NavSidebar/PageTitleBar,
+		// named in ascending order rather than invented semantically.
+		fontSize: {
+			'3xs': 11,
+			'2xs': 11.5,
+			xs: 12,
+			sm: 12.5,
+			md: 13,
+			lg: 13.5,
+			xl: 14,
+			'2xl': 15,
+			'3xl': 22,
+			heading: 19,
+		},
+		elevation: {
+			0: 'inset 0 0 0 1px rgba(20, 23, 27, 0.07)',
+			1: 'inset 0 1px 0 #fff, inset 0 0 0 1px rgba(20, 23, 27, 0.07), 0 1px 2px rgba(20, 23, 27, 0.04)',
+			2: 'inset 0 1px 0 #fff, inset 0 0 0 1px rgba(20, 23, 27, 0.06), 0 2px 4px rgba(20, 23, 27, 0.04), 0 12px 28px -14px rgba(20, 23, 27, 0.16)',
+			3: 'inset 0 1px 0 #fff, 0 4px 8px rgba(20, 23, 27, 0.05), 0 24px 48px -20px rgba(20, 23, 27, 0.22)',
+			inset: 'inset 2px 2px 5px rgba(20, 23, 27, 0.07), inset -2px -2px 5px #fff',
+		},
+		motion: {
+			ease: 'cubic-bezier(.4,0,.2,1)',
+			durHover: '140ms',
+			durEnter: '220ms',
+		},
 	},
 	// Component-specific overrides
 	components: {

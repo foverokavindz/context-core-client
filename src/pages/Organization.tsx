@@ -2,19 +2,19 @@ import PageShellLayout from '../layouts/PageShellLayout';
 import PageTitleBar from '../components/PageTitleBar';
 import ComingSoonPlaceholder from '../components/ComingSoonPlaceholder';
 
-function Dashboard() {
+function Organization() {
 	return (
 		<PageShellLayout
 			header={
 				<PageTitleBar
-					title="Dashboard"
-					subtitle="Overview of your organizational knowledge and connected systems."
+					title="Organization"
+					subtitle="Manage your workspace, people, teams and departments."
 				/>
 			}
 		>
-			<ComingSoonPlaceholder label="Dashboard" />
+			<ComingSoonPlaceholder label="Organization" />
 		</PageShellLayout>
 	);
 }
 
-export default Dashboard;
+export default Organization;
