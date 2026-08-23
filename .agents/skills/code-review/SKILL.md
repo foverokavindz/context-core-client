@@ -24,13 +24,14 @@ Check in this order:
 3. TypeScript: unsafe `any`, unjustified assertions or suppressions, and types that disagree with runtime data.
 4. Security: unsafe HTML, exposed secrets or tokens, and unsanitized input in URLs, queries, or evaluation contexts.
 5. Performance: expensive render work, unnecessary requests, missing deduplication, and material bundle-size regressions.
-6. Testing: behavior changes without meaningful coverage and tests coupled to implementation details.
-7. Project conventions: only flag a style issue when it violates `AGENTS.md`, a configured linter or formatter, or a clear local convention.
+6. Styling (MUI): flag any `sx` prop with more than 3 top-level keys (nested selectors like `'&:hover'` count as 1 key each) that was not extracted per `.claude/rules/mui-sx-limit.md` — check whether it should have gone to a theme override (shared across components) or a local `ComponentName.styled.component.tsx` (specific to one component). Flag any hardcoded color, spacing, font-size, border-radius, or shadow value inside a styled component or `sx` prop instead of a `theme.*` token; genuinely one-off values with no design meaning (e.g. a specific `zIndex` offset) are not findings.
+7. Testing: behavior changes without meaningful coverage and tests coupled to implementation details.
+8. Project conventions: only flag a style issue when it violates `AGENTS.md`, a configured linter or formatter, or a clear local convention.
 
 ## Severity
 
 - **Blocker** - A bug, security issue, data-loss risk, or broken behavior that must be fixed before merge.
-- **Should fix** - A concrete problem that is likely to cause maintenance or product issues.
+- **Should fix** - A concrete problem that is likely to cause maintenance or product issues. MUI styling violations (sx limit, hardcoded values) are Should Fix, not Blocker, unless the hardcoded value is a duplicated/drifting design value already used elsewhere with a different raw value.
 - **Nit** - A minor optional improvement. Use sparingly.
 
 ## Output
@@ -39,18 +40,23 @@ Return one structured report:
 
 ```markdown
 ## Code Review Summary
+
 <One or two sentence verdict>
 
 ## Blockers
+
 - `path/to/file.tsx:42` - <issue> - <why it matters> - <concise suggested fix>
 
 ## Should Fix
+
 - `path/to/file.tsx:17` - <issue> - <concise suggested fix>
 
 ## Nits
+
 - `path/to/file.tsx:8` - <issue>
 
 ## What's Good
+
 - <One to three specific positives, only when useful>
 ```
 
