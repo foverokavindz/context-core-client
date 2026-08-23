@@ -1,6 +1,6 @@
 # MUI (Material UI) Reference
 
-> Decision frameworks, anti-patterns, and quick reference for MUI. See [SKILL.md](SKILL.md) for core concepts and [examples/](examples/) for practical code examples. **Current: v7.x (March 2025)** -- CSS layers, standardized slots, Grid v2 promoted.
+> Decision frameworks, anti-patterns, and quick reference for MUI. See [SKILL.md](SKILL.md) for core concepts and [examples/](examples/) for practical code examples. The project baseline is Material UI v9; the migration table below is retained as historical guidance for older code.
 
 ---
 
@@ -204,7 +204,7 @@ createTheme({
 
 ---
 
-## MUI v7 Migration Quick Reference
+## Legacy v6 to v7 Migration Quick Reference
 
 | v6 Pattern                                                       | v7 Pattern                                           |
 | ---------------------------------------------------------------- | ---------------------------------------------------- |
@@ -307,7 +307,7 @@ function Table({ rows }) {
 ### Deep Imports Beyond One Level
 
 ```typescript
-// WRONG: Broken in v7 ESM package layout
+// WRONG: Unsupported package internals
 import createTheme from "@mui/material/styles/createTheme";
 
 // CORRECT: Maximum one level deep

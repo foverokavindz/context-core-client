@@ -1,0 +1,3 @@
+# Claude Code Compatibility
+
+The canonical project instructions are in @AGENTS.md. Read and follow them before acting.
