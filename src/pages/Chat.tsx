@@ -2,7 +2,7 @@ import { Clock } from 'lucide-react';
 import ChatPanel from '../features/chat/panels/Chat.panel';
 import HistoryPanel from '../features/chat/panels/History.panel';
 import { ChatProvider, useChatContext } from '../features/chat/context/Chat.context';
-import { StyledChatPageRoot, StyledHistoryToggleButton } from './Chat.styled.component';
+import { StyledChatPageRoot, StyledHistoryToggleButton } from '../components/styled/Chat.styled.component';
 
 function ChatLayout() {
   const { historyCollapsed, toggleHistoryCollapsed } = useChatContext();

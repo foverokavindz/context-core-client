@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
-import { EXPANDED_WIDTH as HISTORY_WIDTH } from '../features/chat/panels/History.panel.styled.component';
+import { EXPANDED_WIDTH } from './History.panel.styled.component';
 
 export const StyledChatPageRoot = styled(Box)({
   position: 'relative',
@@ -16,7 +16,7 @@ export const StyledHistoryToggleButton = styled(IconButton, {
 })<IconButtonProps & { historyCollapsed: boolean }>(({ theme, historyCollapsed }) => ({
   position: 'absolute',
   top: 7,
-  right: historyCollapsed ? 16 : HISTORY_WIDTH + 7,
+  right: historyCollapsed ? 16 : EXPANDED_WIDTH + 7,
   zIndex: 20,
   width: 40,
   height: 40,

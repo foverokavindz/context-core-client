@@ -16,7 +16,7 @@ import {
   StyledUserAvatar,
   StyledUserName,
   StyledUserRole,
-} from './TopBar.styled.component';
+} from './styled/TopBar.styled.component';
 
 const ORG_NAME = 'Ascentic Engineering';
 const USER_NAME = 'Kavinda';
