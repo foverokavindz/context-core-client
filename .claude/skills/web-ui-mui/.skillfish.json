@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "web-ui-mui",
+  "owner": "agents-inc",
+  "repo": "skills",
+  "path": "dist/plugins/web-ui-mui/skills/web-ui-mui",
+  "branch": "main",
+  "sha": "9b6d31224a363b02aa07694e684127ad44c4eded",
+  "source": "manual"
+}
