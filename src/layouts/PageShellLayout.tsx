@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import { StyledPageShellRoot, StyledPageShellBody } from './PageShellLayout.styled.component';
 
 interface PageShellLayoutProps {
   header: React.ReactNode;
@@ -8,11 +9,11 @@ interface PageShellLayoutProps {
 
 const PageShellLayout: React.FC<PageShellLayoutProps> = ({ header, children, footer }) => {
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', p: 3, pb: 0 }}>
+    <StyledPageShellRoot>
       <Box sx={{ flexShrink: 0 }}>{header}</Box>
-      <Box sx={{ flexGrow: 1, overflowY: 'auto', pb: 5, pr: 1 }}>{children}</Box>
+      <StyledPageShellBody>{children}</StyledPageShellBody>
       {footer && <Box sx={{ flexShrink: 0 }}>{footer}</Box>}
-    </Box>
+    </StyledPageShellRoot>
   );
 };
 

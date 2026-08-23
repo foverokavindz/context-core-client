@@ -1,8 +1,39 @@
-import { Home, Fish, Users } from 'lucide-react';
-import type { NavItem } from '../components/SideNavBar';
+import type { ReactNode } from 'react';
+import { Layout, MessageSquare, Database, FileText, Users, Cpu } from 'lucide-react';
 
-export const MAIN_NAV_ITEMS: NavItem[] = [
-  { label: 'Dashboard', icon: <Home size={22} />, path: '/dashboard' },
-  { label: 'Fish Farms', icon: <Fish size={22} />, path: '/fish-farms' },
-  { label: 'Workers', icon: <Users size={22} />, path: '/workers' },
-]
+export interface NavItem {
+	label: string;
+	path: string;
+	icon: ReactNode;
+}
+
+export interface NavSection {
+	label?: string;
+	items: NavItem[];
+}
+
+const ICON_SIZE = 17;
+
+export const NAV_SECTIONS: NavSection[] = [
+	{
+		items: [
+			{ label: 'Dashboard', icon: <Layout size={ICON_SIZE} />, path: '/dashboard' },
+			{ label: 'Chat', icon: <MessageSquare size={ICON_SIZE} />, path: '/chat' },
+		],
+	},
+	{
+		label: 'Knowledge',
+		items: [
+			{ label: 'Data Sources', icon: <Database size={ICON_SIZE} />, path: '/data-sources' },
+			{ label: 'Documents', icon: <FileText size={ICON_SIZE} />, path: '/documents' },
+		],
+	},
+	{
+		label: 'Management',
+		items: [{ label: 'Organization', icon: <Users size={ICON_SIZE} />, path: '/organization' }],
+	},
+	{
+		label: 'Integrations',
+		items: [{ label: 'Agents / MCP', icon: <Cpu size={ICON_SIZE} />, path: '/agents-mcp' }],
+	},
+];
