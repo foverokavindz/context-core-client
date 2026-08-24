@@ -1,19 +1,30 @@
 import PageShellLayout from '../layouts/PageShellLayout';
 import PageTitleBar from '../components/PageTitleBar';
-import ComingSoonPlaceholder from '../components/ComingSoonPlaceholder';
+import { DataSourcesProvider } from '../features/datasources/context/DataSources.context';
+import DataSourcesPanel from '../features/datasources/panels/DataSources.panel';
+import AddSourceButton from '../features/datasources/panels/AddSourceButton';
 
-function DataSources() {
+function DataSourcesLayout() {
 	return (
 		<PageShellLayout
 			header={
 				<PageTitleBar
 					title="Data Sources"
 					subtitle="Connect, sync and monitor the knowledge sources that power your context engine."
+					actions={<AddSourceButton />}
 				/>
 			}
 		>
-			<ComingSoonPlaceholder label="Data Sources" />
+			<DataSourcesPanel />
 		</PageShellLayout>
+	);
+}
+
+function DataSources() {
+	return (
+		<DataSourcesProvider>
+			<DataSourcesLayout />
+		</DataSourcesProvider>
 	);
 }
 

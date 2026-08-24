@@ -2,10 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 const FONT_PRIMARY = 'Inter, sans-serif';
 
-// Design tokens carried over 1:1 from the Context Core mockup's --m-* theme
-// (theme-modern.css) that don't map cleanly onto MUI's palette/shadow slots -
-// e.g. 3 ink levels, 5 surface levels, and a soft dual-shadow elevation
-// system. Addressed via `theme.tokens.*` instead of stretching Palette.
+// Design tokens carried over 1:1 from the Context Core mockup's
 export interface ThemeTokens {
 	ink2: string;
 	ink3: string;
@@ -20,6 +17,7 @@ export interface ThemeTokens {
 	positiveTint: string;
 	warningTint: string;
 	criticalTint: string;
+	scrim: string;
 	radius: {
 		sm: number;
 		md: number;
@@ -81,6 +79,13 @@ declare module '@mui/material/styles' {
 		tokens?: ThemeTokens;
 	}
 }
+
+declare module '@mui/material/Paper' {
+	interface PaperPropsVariantOverrides {
+		soft: true;
+	}
+}
+
 export const theme = createTheme({
 	palette: {
 		mode: 'light',
@@ -254,6 +259,7 @@ export const theme = createTheme({
 		positiveTint: 'rgba(15, 160, 92, 0.12)',
 		warningTint: 'rgba(228, 158, 34, 0.14)',
 		criticalTint: 'rgba(231, 0, 11, 0.10)',
+		scrim: 'rgba(20, 23, 27, 0.45)',
 		radius: {
 			sm: 6,
 			md: 8,
@@ -262,10 +268,7 @@ export const theme = createTheme({
 			'2xl': 18,
 			'3xl': 22,
 		},
-		// Micro type ladder for UI chrome (nav labels, badges, meta text) — the
-		// mockup's --m-* tokens don't define a font-size scale, so these are the
-		// distinct sizes actually used across TopBar/NavSidebar/PageTitleBar,
-		// named in ascending order rather than invented semantically.
+		// Micro type ladder for UI chrome (nav labels, badges, meta text)
 		fontSize: {
 			'3xs': 11,
 			'2xs': 11.5,
@@ -309,6 +312,17 @@ export const theme = createTheme({
 					boxShadow: 'none',
 				}),
 			},
+			variants: [
+				{
+					props: { variant: 'soft' },
+					style: ({ theme }) => ({
+						border: 'none',
+						backgroundColor: theme.tokens.surfaceRaised,
+						borderRadius: theme.tokens.radius.xl,
+						boxShadow: theme.tokens.elevation[2],
+					}),
+				},
+			],
 		},
 		MuiButton: {
 			styleOverrides: {
