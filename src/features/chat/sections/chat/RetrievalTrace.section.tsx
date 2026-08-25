@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import Stack from '@mui/material/Stack';
-import { ChevronDown, ChevronUp } from 'lucide-react';
 import SourceIconSection from '../shared/SourceIcon.section';
+import CollapsiblePanelSection from '../shared/CollapsiblePanel.section';
 import { getSourceLabel } from '../../chat.constants';
 import type { ChatRetrieval } from '../../../../types/chat.types';
-import { StyledTraceToggleButton } from './Conversation.section.styled.component';
 import {
-  StyledTraceRoot,
   StyledTraceBody,
   StyledSummaryLabel,
   StyledSummaryValue,
@@ -25,7 +22,6 @@ import {
   StyledStepCountCell,
 } from './RetrievalTrace.section.styled.component';
 
-const CHEVRON_SIZE = 15;
 const STEP_ICON_SIZE = 13;
 
 interface RetrievalTraceSectionProps {
@@ -33,19 +29,11 @@ interface RetrievalTraceSectionProps {
 }
 
 function RetrievalTraceSection({ retrieval }: RetrievalTraceSectionProps) {
-  const [open, setOpen] = useState(false);
-
   if (!retrieval) return null;
 
   return (
-    <StyledTraceRoot>
-      <StyledTraceToggleButton onClick={() => setOpen((isOpen) => !isOpen)}>
-        <span>Retrieval Trace</span>
-        {open ? <ChevronUp size={CHEVRON_SIZE} /> : <ChevronDown size={CHEVRON_SIZE} />}
-      </StyledTraceToggleButton>
-
-      {open && (
-        <StyledTraceBody>
+    <CollapsiblePanelSection title="Retrieval Trace">
+      <StyledTraceBody>
           <StyledTraceChipRow direction="row">
             <StyledTraceChip tone="neutral">{retrieval.intent}</StyledTraceChip>
             <StyledTraceChip tone={retrieval.retrieval_required ? 'positive' : 'muted'}>
@@ -85,9 +73,8 @@ function RetrievalTraceSection({ retrieval }: RetrievalTraceSectionProps) {
               ))}
             </StyledStepsTable>
           )}
-        </StyledTraceBody>
-      )}
-    </StyledTraceRoot>
+      </StyledTraceBody>
+    </CollapsiblePanelSection>
   );
 }
 

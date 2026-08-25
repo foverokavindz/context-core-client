@@ -24,3 +24,13 @@ export function getSourceIcon(source: ChatSourceType): LucideIcon {
 export function getSourceLabel(source: ChatSourceType): string {
 	return SOURCE_LABELS[source] ?? source;
 }
+
+export const THINKING_MESSAGES = [
+	'Searching your knowledge sources…',
+	'Digging through your connected sources…',
+	'Reading the most relevant passages…',
+	'Connecting the dots across sources…',
+	'Cross-checking what your docs say…',
+	'Working through the retrieval plan…',
+	'Piecing an answer together…',
+];

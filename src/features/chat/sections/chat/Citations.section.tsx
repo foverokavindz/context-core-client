@@ -2,9 +2,11 @@ import { useState } from 'react';
 import Popover from '@mui/material/Popover';
 import Stack from '@mui/material/Stack';
 import SourceIconSection from '../shared/SourceIcon.section';
+import CollapsiblePanelSection from '../shared/CollapsiblePanel.section';
 import { getSourceLabel } from '../../chat.constants';
 import type { ChatSource } from '../../../../types/chat.types';
 import {
+  StyledCitationPillRow,
   StyledCitationPill,
   StyledCitationSource,
   StyledCitationTitle,
@@ -74,8 +76,8 @@ function CitationsSection({ sources }: CitationsSectionProps) {
   };
 
   return (
-    <>
-      <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap', rowGap: 1 }}>
+    <CollapsiblePanelSection title="Citations" count={sources.length}>
+      <StyledCitationPillRow direction="row">
         {sources.map((source) => (
           <StyledCitationPill
             key={source.chunk_id}
@@ -89,7 +91,7 @@ function CitationsSection({ sources }: CitationsSectionProps) {
             <StyledCitationTitle component="span">{citationTitle(source)}</StyledCitationTitle>
           </StyledCitationPill>
         ))}
-      </Stack>
+      </StyledCitationPillRow>
 
       <Popover
         open={Boolean(anchorEl && activeSource)}
@@ -100,7 +102,7 @@ function CitationsSection({ sources }: CitationsSectionProps) {
       >
         {activeSource && <CitationDetail source={activeSource} />}
       </Popover>
-    </>
+    </CollapsiblePanelSection>
   );
 }
 

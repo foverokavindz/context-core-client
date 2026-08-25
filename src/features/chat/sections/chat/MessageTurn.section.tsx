@@ -1,7 +1,7 @@
 import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
 import { CircleAlert, Cpu, TriangleAlert } from 'lucide-react';
 import Markdown from '../../../../components/Markdown';
+import ThinkingBubbleSection from './ThinkingBubble.section';
 import CitationsSection from './Citations.section';
 import RetrievalTraceSection from './RetrievalTrace.section';
 import { CURRENT_USER } from '../../../../configs/user.configs';
@@ -16,7 +16,6 @@ import {
   StyledUserRow,
   StyledAiRow,
   StyledAiColumn,
-  StyledLoadingBubble,
   StyledErrorBubble,
   StyledWarningBanner,
   StyledBubbleIcon,
@@ -25,7 +24,6 @@ import {
 
 const AVATAR_ICON_SIZE = 14;
 const BUBBLE_ICON_SIZE = 16;
-const SPINNER_SIZE = 16;
 
 interface MessageTurnSectionProps {
   turn: ChatTurn;
@@ -46,12 +44,7 @@ function MessageTurnSection({ turn }: MessageTurnSectionProps) {
           <Cpu size={AVATAR_ICON_SIZE} />
         </StyledAiAvatarBox>
         <StyledAiColumn>
-          {turn.status === 'loading' && (
-            <StyledLoadingBubble>
-              <CircularProgress size={SPINNER_SIZE} color="inherit" />
-              <span>Searching your knowledge sources…</span>
-            </StyledLoadingBubble>
-          )}
+          {turn.status === 'loading' && <ThinkingBubbleSection />}
 
           {turn.status === 'error' && (
             <StyledErrorBubble>

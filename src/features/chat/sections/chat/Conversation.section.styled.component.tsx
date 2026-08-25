@@ -2,7 +2,6 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
 
 const EMPTY_STATE_MAX_WIDTH = 320;
 const AVATAR_SIZE = 28;
@@ -89,19 +88,4 @@ export const StyledAiMessageBubble = styled(Box)(({ theme }) => ({
 	fontSize: theme.tokens.fontSize.xl,
 	lineHeight: 1.65,
 	color: theme.palette.text.primary,
-}));
-
-export const StyledTraceToggleButton = styled(ButtonBase)(({ theme }) => ({
-	display: 'flex',
-	alignItems: 'center',
-	justifyContent: 'space-between',
-	width: '100%',
-	backgroundColor: theme.palette.background.paper,
-	paddingLeft: theme.spacing(1.75),
-	paddingRight: theme.spacing(1.75),
-	paddingTop: theme.spacing(1.375),
-	paddingBottom: theme.spacing(1.375),
-	fontSize: theme.tokens.fontSize.md,
-	fontWeight: 500,
-	color: theme.palette.text.secondary,
 }));

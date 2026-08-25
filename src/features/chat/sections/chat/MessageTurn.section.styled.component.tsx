@@ -20,19 +20,6 @@ export const StyledAiColumn = styled(Stack)(({ theme }) => ({
 	gap: theme.spacing(1.75),
 }));
 
-export const StyledLoadingBubble = styled(Stack)(({ theme }) => ({
-	flexDirection: 'row',
-	alignItems: 'center',
-	gap: theme.spacing(1.25),
-	backgroundColor: theme.palette.background.paper,
-	boxShadow: theme.tokens.elevation[1],
-	paddingInline: theme.spacing(2.25),
-	paddingBlock: theme.spacing(2),
-	borderRadius: theme.tokens.radius.xl,
-	fontSize: theme.tokens.fontSize.xl,
-	color: theme.palette.text.secondary,
-}));
-
 export const StyledErrorBubble = styled(Stack)(({ theme }) => ({
 	flexDirection: 'row',
 	alignItems: 'flex-start',

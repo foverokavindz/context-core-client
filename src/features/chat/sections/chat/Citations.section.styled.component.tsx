@@ -8,6 +8,11 @@ const PILL_MAX_WIDTH = 260;
 const POPOVER_WIDTH = 380;
 const SNIPPET_MAX_HEIGHT = 190;
 
+export const StyledCitationPillRow = styled(Stack)(({ theme }) => ({
+	flexWrap: 'wrap',
+	gap: theme.spacing(1),
+}));
+
 export const StyledCitationPill = styled(ButtonBase)(({ theme }) => ({
 	display: 'flex',
 	gap: theme.spacing(0.75),
