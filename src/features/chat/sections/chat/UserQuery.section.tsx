@@ -1,19 +1,22 @@
 import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
-import InputBase from '@mui/material/InputBase';
+import CircularProgress from '@mui/material/CircularProgress';
 import { Paperclip, Send } from 'lucide-react';
-import { StyledUserQueryRoot, StyledAttachButton, StyledInputStack, StyledSendButton } from './UserQuery.section.styled.component';
+import { StyledUserQueryRoot, StyledAttachButton, StyledInputStack, StyledSendButton, StyledQueryInput } from './UserQuery.section.styled.component';
+
+const SPINNER_SIZE = 15;
 
 interface UserQuerySectionProps {
 	onSend: (question: string) => void;
+	sending: boolean;
 }
 
-function UserQuerySection({ onSend }: UserQuerySectionProps) {
+function UserQuerySection({ onSend, sending }: UserQuerySectionProps) {
 	const [value, setValue] = useState('');
 
 	const handleSend = () => {
 		const trimmed = value.trim();
-		if (!trimmed) return;
+		if (!trimmed || sending) return;
 		onSend(trimmed);
 		setValue('');
 	};
@@ -27,21 +30,21 @@ function UserQuerySection({ onSend }: UserQuerySectionProps) {
 
 	return (
 		<StyledUserQueryRoot direction="row" spacing={1.25}>
-			<StyledAttachButton aria-label="Attach file">
+			<StyledAttachButton aria-label="Attach file" disabled={sending}>
 				<Paperclip size={16} />
 			</StyledAttachButton>
 			<StyledInputStack direction="row">
-				<InputBase
+				<StyledQueryInput
 					fullWidth
-					placeholder="Ask about your organization's knowledge..."
+					disabled={sending}
+					placeholder={sending ? 'Waiting for an answer…' : "Ask about your organization's knowledge..."}
 					value={value}
 					onChange={(event) => setValue(event.target.value)}
 					onKeyDown={handleKeyDown}
-					sx={{ fontSize: 14, color: 'text.primary' }}
 				/>
 			</StyledInputStack>
-			<StyledSendButton aria-label="Send message" onClick={handleSend} disabled={!value.trim()}>
-				<Send size={15} />
+			<StyledSendButton aria-label="Send message" onClick={handleSend} disabled={sending || !value.trim()}>
+				{sending ? <CircularProgress size={SPINNER_SIZE} color="inherit" /> : <Send size={SPINNER_SIZE} />}
 			</StyledSendButton>
 		</StyledUserQueryRoot>
 	);

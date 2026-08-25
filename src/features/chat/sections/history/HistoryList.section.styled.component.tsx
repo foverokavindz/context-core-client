@@ -23,7 +23,7 @@ export const StyledNewChatButton = styled(Button)(({ theme }) => ({
   '&:hover': { backgroundColor: theme.tokens.surfaceSunken },
 }));
 
-export const StyledDayLabel = styled(Typography)(({ theme }) => ({
+export const StyledSectionLabel = styled(Typography)(({ theme }) => ({
   fontSize: theme.tokens.fontSize['3xs'],
   fontWeight: 500,
   letterSpacing: '.06em',
@@ -52,4 +52,11 @@ export const StyledConversationItemButton = styled(Button, {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   '&:hover': { backgroundColor: active ? theme.tokens.accentTintStrong : theme.tokens.surfaceInset },
+}));
+
+export const StyledEmptyHistoryText = styled(Typography)(({ theme }) => ({
+  fontSize: theme.tokens.fontSize.md,
+  color: theme.palette.text.secondary,
+  lineHeight: 1.5,
+  paddingLeft: theme.spacing(0.5),
 }));

@@ -1,23 +1,24 @@
 import TitleBarSection from '../sections/chat/TitleBar.section';
 import ConversationSection from '../sections/chat/Conversation.section';
 import UserQuerySection from '../sections/chat/UserQuery.section';
-import { CHAT_TRACE_STEPS } from '../chat.mock';
-import type { ChatConversationData } from '../chat.types';
+import type { ChatTurn } from '../chat.types';
 import { StyledChatConversationRoot } from './ChatConversation.screen.styled.component';
 
 interface ChatConversationScreenProps {
 	title: string;
-	data: ChatConversationData | null;
+	turns: ChatTurn[];
+	sending: boolean;
+	creatingSession: boolean;
 	onStartNewChat: () => void;
 	onSend: (question: string) => void;
 }
 
-function ChatConversationScreen({ title, data, onStartNewChat, onSend }: ChatConversationScreenProps) {
+function ChatConversationScreen({ title, turns, sending, creatingSession, onStartNewChat, onSend }: ChatConversationScreenProps) {
 	return (
 		<StyledChatConversationRoot>
-			<TitleBarSection title={title} onStartNewChat={onStartNewChat} />
-			<ConversationSection data={data} traceSteps={CHAT_TRACE_STEPS} />
-			<UserQuerySection onSend={onSend} />
+			<TitleBarSection title={title} onStartNewChat={onStartNewChat} creating={creatingSession} />
+			<ConversationSection turns={turns} />
+			<UserQuerySection onSend={onSend} sending={sending} />
 		</StyledChatConversationRoot>
 	);
 }

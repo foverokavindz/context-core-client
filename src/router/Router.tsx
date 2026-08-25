@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: 'dashboard', element: <Dashboard /> },
-      { path: 'chat', element: <Chat /> },
+      { path: 'chat/:chatSessionId?', element: <Chat /> },
       { path: 'data-sources', element: <DataSources /> },
       { path: 'documents', element: <Documents /> },
       { path: 'organization', element: <Organization /> },

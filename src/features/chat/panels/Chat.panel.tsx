@@ -1,24 +1,28 @@
 import { useChatContext } from '../context/Chat.context';
 import NewChatScreen from '../screens/NewChat.screen';
 import ChatConversationScreen from '../screens/ChatConversation.screen';
+import { NEW_CHAT_TITLE } from '../../../configs/chat.configs';
 import { StyledChatPanelRoot } from './Chat.panel.styled.component';
 
 function ChatPanel() {
-  const { activeConv, conversations, activeData, startNewChat, sendMessage } = useChatContext();
+  const { activeConv, conversations, turns, sending, creatingSession, sessionError, startNewChat, sendMessage } = useChatContext();
 
   const activeTitle =
-    activeConv === null
-      ? ''
-      : activeConv === 'new'
-        ? 'New Chat'
-        : (conversations.find((conversation) => conversation.id === activeConv)?.title ?? 'Conversation');
+    activeConv === null ? '' : (conversations.find((conversation) => conversation.id === activeConv)?.title ?? NEW_CHAT_TITLE);
 
   return (
     <StyledChatPanelRoot>
       {activeConv === null ? (
-        <NewChatScreen onStartNewChat={startNewChat} />
+        <NewChatScreen onStartNewChat={startNewChat} creating={creatingSession} error={sessionError} />
       ) : (
-        <ChatConversationScreen title={activeTitle} data={activeData} onStartNewChat={startNewChat} onSend={sendMessage} />
+        <ChatConversationScreen
+          title={activeTitle}
+          turns={turns}
+          sending={sending}
+          creatingSession={creatingSession}
+          onStartNewChat={startNewChat}
+          onSend={sendMessage}
+        />
       )}
     </StyledChatPanelRoot>
   );

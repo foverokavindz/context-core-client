@@ -48,4 +48,11 @@ export const StyledStartButton = styled(Button)(({ theme }) => ({
 	backgroundColor: theme.palette.primary.main,
 	color: theme.palette.primary.contrastText,
 	'&:hover': { backgroundColor: theme.palette.primary.main },
+	'&.Mui-disabled': { backgroundColor: theme.palette.primary.light, color: theme.palette.primary.contrastText },
+}));
+
+export const StyledStartErrorText = styled(Typography)(({ theme }) => ({
+	fontSize: theme.tokens.fontSize.md,
+	color: theme.palette.error.dark,
+	maxWidth: 380,
 }));

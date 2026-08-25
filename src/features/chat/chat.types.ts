@@ -1,25 +1,16 @@
-import type { LucideIcon } from 'lucide-react';
+import type { ChatAnswer } from '../../types/chat.types';
 
-export interface ChatCitation {
-	source: string;
-	icon: LucideIcon;
-	label: string;
-}
+export type ChatTurnStatus = 'loading' | 'answered' | 'warning' | 'error';
 
-export interface ChatTraceStep {
-	label: string;
-}
-
-export interface ChatConversationData {
+export interface ChatTurn {
+	id: string;
 	question: string;
-	answer: string;
-	citations: ChatCitation[];
+	status: ChatTurnStatus;
+	answer: ChatAnswer | null;
+	errorMessage: string | null;
 }
-
-export type ChatDay = 'today' | 'yesterday';
 
 export interface ChatConversationSummary {
 	id: string;
 	title: string;
-	day: ChatDay;
 }

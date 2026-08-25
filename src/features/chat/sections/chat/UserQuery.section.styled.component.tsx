@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import IconButton from '@mui/material/IconButton';
+import InputBase from '@mui/material/InputBase';
 
 export const StyledUserQueryRoot = styled(Stack)(({ theme }) => ({
 	flexShrink: 0,
@@ -39,4 +40,10 @@ export const StyledSendButton = styled(IconButton)(({ theme }) => ({
 	color: theme.palette.primary.contrastText,
 	'&:hover': { backgroundColor: theme.palette.primary.main },
 	'&.Mui-disabled': { backgroundColor: theme.tokens.surfaceInset, color: theme.tokens.ink3 },
+}));
+
+export const StyledQueryInput = styled(InputBase)(({ theme }) => ({
+	fontSize: theme.tokens.fontSize.xl,
+	color: theme.palette.text.primary,
+	'&.Mui-disabled': { color: theme.palette.text.secondary },
 }));
