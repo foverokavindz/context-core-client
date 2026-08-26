@@ -1,7 +1,8 @@
+import { Check, Clock, Database, FileText } from 'lucide-react';
 import { FALLBACK_SOURCE_ICON, getSourceConfig, getSourceTarget } from '../../configs/datasource.configs';
 import { SYNC_RUN_STATUS, type SyncRunStatusType } from '../../types/common.types';
-import type { DataSourceDetail, DataSourceSummary, IndexedResource, SyncRun } from '../../types/dataSource.types';
-import type { DataSource, DataSourceStatus, DataStat, IndexedItem, IngestionStep, IngestionStepState, RunStatus, SourceRun } from './datasources.types';
+import type { DataSourceDetail, DataSourceStats, DataSourceSummary, IndexedResource, SyncRun } from '../../types/dataSource.types';
+import type { DataSource, DataSourceStatus, DataStat, IndexedItem, IngestionStep, IngestionStepState, RunStatus, SourceRun, SourceStat } from './datasources.types';
 
 const EM_DASH = '—';
 
@@ -11,6 +12,8 @@ const DAY_MS = 24 * HOUR_MS;
 
 const SECOND_MS = 1000;
 const SECONDS_PER_MINUTE = 60;
+
+const PERCENT = 100;
 
 const STEP_LABELS = ['Pending', 'Started', 'Running', 'Completed'] as const;
 
@@ -142,4 +145,49 @@ export function toDataStats(detail: DataSourceDetail | null): DataStat[] {
 		{ label: 'Chunks', value: detail ? detail.chunk_count.toLocaleString() : EM_DASH },
 		{ label: 'Last run', value: detail ? relativeTime(detail.last_synced_at) : EM_DASH },
 	];
+}
+
+function statValue(value: number | null): string {
+	return value === null ? EM_DASH : value.toLocaleString();
+}
+
+export function toConnectedSourcesStat(stats: DataSourceStats | null): SourceStat {
+	return {
+		label: 'Connected Sources',
+		value: statValue(stats?.connected_sources ?? null),
+		caption: stats ? `of ${stats.total_sources.toLocaleString()} total` : '',
+		icon: Database,
+	};
+}
+
+export function toHealthySyncsStat(stats: DataSourceStats | null): SourceStat {
+	const share =
+		stats && stats.total_sources > 0
+			? Math.round((stats.healthy_syncs / stats.total_sources) * PERCENT)
+			: 0;
+
+	return {
+		label: 'Healthy Syncs',
+		value: statValue(stats?.healthy_syncs ?? null),
+		caption: stats ? `${share}% of sources` : '',
+		icon: Check,
+	};
+}
+
+export function toPendingSetupStat(stats: DataSourceStats | null): SourceStat {
+	return {
+		label: 'Pending Setup',
+		value: statValue(stats?.pending_setup ?? null),
+		caption: stats ? (stats.pending_setup > 0 ? 'Needs attention' : 'All caught up') : '',
+		icon: Clock,
+	};
+}
+
+export function toIndexedItemsStat(stats: DataSourceStats | null): SourceStat {
+	return {
+		label: 'Indexed Items',
+		value: statValue(stats?.indexed_items ?? null),
+		caption: stats ? `${stats.total_chunks.toLocaleString()} chunks` : '',
+		icon: FileText,
+	};
 }

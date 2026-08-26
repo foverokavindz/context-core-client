@@ -132,7 +132,7 @@ function DataSourcesTableWidget() {
                           )
                         }
                       >
-                        {needsSetup ? 'Connect' : 'View Runs'}
+                        {needsSetup ? 'Connect' : 'Sync'}
                       </StyledRowActionButton>
                     </Stack>
                   </StyledBodyCell>

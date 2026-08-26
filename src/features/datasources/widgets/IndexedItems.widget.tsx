@@ -1,12 +1,15 @@
 import AppCard from '../../../components/AppCard';
 import StatTileSection from '../sections/shared/StatTile.section';
-import { INDEXED_ITEMS_STAT } from '../datasources.mock';
+import { useSourceStats } from '../datasources.hooks';
+import { toIndexedItemsStat } from '../datasources.mappers';
 
 /** KPI tile for the total number of indexed items. */
 function IndexedItemsWidget() {
+	const { stats } = useSourceStats();
+
 	return (
 		<AppCard>
-			<StatTileSection stat={INDEXED_ITEMS_STAT} />
+			<StatTileSection stat={toIndexedItemsStat(stats)} />
 		</AppCard>
 	);
 }

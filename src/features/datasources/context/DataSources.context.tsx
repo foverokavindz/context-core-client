@@ -44,6 +44,7 @@ interface DataSourcesContextValue {
   sources: DataSource[];
   sourcesLoading: boolean;
   sourcesError: string | null;
+  statsVersion: number;
   catalog: SourceCatalogEntry[];
   scope: ScopeItem[];
   syncFrequency: SyncFrequency;
@@ -88,6 +89,7 @@ export function DataSourcesProvider({ children }: { children: ReactNode }) {
   const [summaries, setSummaries] = useState<DataSourceSummary[]>([]);
   const [sourcesLoading, setSourcesLoading] = useState(false);
   const [sourcesError, setSourcesError] = useState<string | null>(null);
+  const [statsVersion, setStatsVersion] = useState(0);
 
   const [scope, setScope] = useState<ScopeItem[]>(SOURCE_SCOPE);
   const [syncFrequency, setSyncFrequency] = useState<SyncFrequency>('daily');
@@ -127,6 +129,7 @@ export function DataSourcesProvider({ children }: { children: ReactNode }) {
     const response = await dataSourceService.GetDataSourcesByTeam(CURRENT_USER.teamId);
     if (response.success && response.data) {
       setSummaries(response.data);
+      setStatsVersion((previous) => previous + 1);
     } else {
       console.error('Get Data Sources Error:', response.message);
       setSourcesError(response.error ?? response.message ?? SOURCES_ERROR);
@@ -318,6 +321,7 @@ export function DataSourcesProvider({ children }: { children: ReactNode }) {
     sources,
     sourcesLoading,
     sourcesError,
+    statsVersion,
     catalog: SOURCE_CATALOG,
     scope,
     syncFrequency,

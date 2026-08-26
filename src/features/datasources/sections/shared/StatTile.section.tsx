@@ -22,7 +22,7 @@ function StatTileSection({ stat }: StatTileSectionProps) {
         <StyledStatIconChip>
           <StatIcon size={STAT_ICON_SIZE} />
         </StyledStatIconChip>
-        <StyledStatValue>{stat.value}</StyledStatValue>
+        <StyledStatValue>{stat.value === "0" ? "0" : stat.value}</StyledStatValue>
       </Stack>
       <Stack spacing={0.25} sx={{ minWidth: 0 }}>
         <StyledStatLabel>{stat.label}</StyledStatLabel>

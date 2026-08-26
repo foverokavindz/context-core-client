@@ -1,33 +1,4 @@
-import { Check, Clock, Database, FileText } from 'lucide-react';
-import type { ScopeItem, SourceStat, SyncFrequency } from './datasources.types';
-
-export const CONNECTED_SOURCES_STAT: SourceStat = {
-	label: 'Connected Sources',
-	value: '4',
-	caption: 'of 5 total',
-	icon: Database,
-};
-
-export const HEALTHY_SYNCS_STAT: SourceStat = {
-	label: 'Healthy Syncs',
-	value: '4',
-	caption: '80% of sources',
-	icon: Check,
-};
-
-export const PENDING_SETUP_STAT: SourceStat = {
-	label: 'Pending Setup',
-	value: '1',
-	caption: 'Needs attention',
-	icon: Clock,
-};
-
-export const INDEXED_ITEMS_STAT: SourceStat = {
-	label: 'Indexed Items',
-	value: '128,450',
-	caption: '+3,842 vs last 7d',
-	icon: FileText,
-};
+import type { ScopeItem, SyncFrequency } from './datasources.types';
 
 export const SOURCE_SCOPE: ScopeItem[] = [
 	{ name: 'context-core-api', selected: true },
