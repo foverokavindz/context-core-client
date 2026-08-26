@@ -37,7 +37,9 @@ function IngestionPipelineSection({ steps }: IngestionPipelineSectionProps) {
           </StyledPipelineRail>
           <Stack spacing={0.125} sx={{ minWidth: 0, pb: 2 }}>
             <StyledPipelineLabel>{step.label}</StyledPipelineLabel>
-            <StyledPipelineState state={step.state}>{STATE_LABELS[step.state]}</StyledPipelineState>
+            <StyledPipelineState state={step.state}>
+              {step.detail ?? STATE_LABELS[step.state]}
+            </StyledPipelineState>
           </Stack>
         </StyledPipelineStep>
       ))}

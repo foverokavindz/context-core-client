@@ -1,7 +1,6 @@
 import Stack from '@mui/material/Stack';
 import AppCard from '../../../components/AppCard';
 import { useDataSourcesContext } from '../context/DataSources.context';
-import { RECOMMENDED_SOURCES } from '../datasources.mock';
 import {
 	StyledRecommendedRow,
 	StyledRecommendedIconChip,
@@ -11,31 +10,35 @@ import {
 } from './RecommendedSources.widget.styled.component';
 
 const APP_ICON_SIZE = 15;
+const RECOMMENDED_COUNT = 3;
 
 function RecommendedSourcesWidget() {
-	const { openWizard } = useDataSourcesContext();
+	const { catalog, openWizard } = useDataSourcesContext();
+	const recommended = catalog.slice(0, RECOMMENDED_COUNT);
 
 	return (
 		<AppCard title="Recommended Sources">
 			<Stack spacing={0.25} sx={{ minWidth: 0 }}>
-				{RECOMMENDED_SOURCES.map((app, index) => {
-					const AppIcon = app.icon;
+				{recommended.map((entry, index) => {
+					const AppIcon = entry.icon;
 
 					return (
 						<StyledRecommendedRow
-							key={app.key}
+							key={entry.sourceType}
 							direction="row"
 							spacing={1.375}
-							divided={index < RECOMMENDED_SOURCES.length - 1}
+							divided={index < recommended.length - 1}
 						>
 							<StyledRecommendedIconChip>
 								<AppIcon size={APP_ICON_SIZE} />
 							</StyledRecommendedIconChip>
 							<Stack spacing={0.125} sx={{ flex: 1, minWidth: 0 }}>
-								<StyledRecommendedName>{app.name}</StyledRecommendedName>
-								<StyledRecommendedDescription>{app.description}</StyledRecommendedDescription>
+								<StyledRecommendedName>{entry.name}</StyledRecommendedName>
+								<StyledRecommendedDescription>{entry.description}</StyledRecommendedDescription>
 							</Stack>
-							<StyledConnectButton onClick={() => openWizard(app.key)}>Connect</StyledConnectButton>
+							<StyledConnectButton onClick={() => openWizard(entry.sourceType)}>
+								Connect
+							</StyledConnectButton>
 						</StyledRecommendedRow>
 					);
 				})}

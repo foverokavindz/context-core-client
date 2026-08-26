@@ -1,5 +1,6 @@
 import { Check } from 'lucide-react';
-import type { CatalogApp } from '../../datasources.types';
+import type { SourceCatalogEntry } from '../../../../configs/datasource.configs';
+import type { SourceTypeType } from '../../../../types/common.types';
 import {
   StyledCatalogGrid,
   StyledCatalogCard,
@@ -13,25 +14,29 @@ const APP_ICON_SIZE = 17;
 const BADGE_ICON_SIZE = 11;
 
 interface SelectSourceSectionProps {
-  catalog: CatalogApp[];
-  selectedKey: string | null;
-  onPick: (key: string) => void;
+  catalog: SourceCatalogEntry[];
+  selectedSourceType: SourceTypeType | null;
+  onPick: (sourceType: SourceTypeType) => void;
 }
 
-function SelectSourceSection({ catalog, selectedKey, onPick }: SelectSourceSectionProps) {
+function SelectSourceSection({ catalog, selectedSourceType, onPick }: SelectSourceSectionProps) {
   return (
     <StyledCatalogGrid>
-      {catalog.map((app) => {
-        const AppIcon = app.icon;
-        const selected = app.key === selectedKey;
+      {catalog.map((entry) => {
+        const AppIcon = entry.icon;
+        const selected = entry.sourceType === selectedSourceType;
 
         return (
-          <StyledCatalogCard key={app.key} selected={selected} onClick={() => onPick(app.key)}>
+          <StyledCatalogCard
+            key={entry.sourceType}
+            selected={selected}
+            onClick={() => onPick(entry.sourceType)}
+          >
             <StyledCatalogIconChip>
               <AppIcon size={APP_ICON_SIZE} />
             </StyledCatalogIconChip>
-            <StyledCatalogName>{app.name}</StyledCatalogName>
-            <StyledCatalogDescription>{app.description}</StyledCatalogDescription>
+            <StyledCatalogName>{entry.name}</StyledCatalogName>
+            <StyledCatalogDescription>{entry.description}</StyledCatalogDescription>
             {selected && (
               <StyledCatalogBadge>
                 <Check size={BADGE_ICON_SIZE} />

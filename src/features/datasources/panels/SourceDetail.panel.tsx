@@ -1,12 +1,9 @@
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { X } from 'lucide-react';
+import { getSourceConfig } from '../../../configs/datasource.configs';
 import { useDataSourcesContext } from '../context/DataSources.context';
-import {
-	INDEXED_ITEMS,
-	INGESTION_STEPS,
-	SOURCE_DATA_STATS,
-	SOURCE_RUNS,
-} from '../datasources.mock';
+import { toDataStats, toIndexedItems } from '../datasources.mappers';
 import type { DataSourceStatus, DrawerTab } from '../datasources.types';
 import IngestionSection from '../sections/drawer/Ingestion.section';
 import ConfigurationSection from '../sections/drawer/Configuration.section';
@@ -47,6 +44,10 @@ function SourceDetailPanel() {
 		syncFrequency,
 		drawerOpen,
 		drawerSource,
+		drawerDetail,
+		drawerRuns,
+		drawerResources,
+		drawerError,
 		drawerTab,
 		closeDrawer,
 		setDrawerTab,
@@ -57,6 +58,7 @@ function SourceDetailPanel() {
 	if (!drawerSource) return null;
 
 	const SourceIcon = drawerSource.icon;
+	const entry = getSourceConfig(drawerSource.sourceType);
 
 	return (
 		<StyledSourceDrawer anchor="right" open={drawerOpen} onClose={closeDrawer}>
@@ -89,16 +91,23 @@ function SourceDetailPanel() {
 			</StyledDrawerTabs>
 
 			<StyledDrawerBody>
-				{drawerTab === 'ingestion' && <IngestionSection steps={INGESTION_STEPS} runs={SOURCE_RUNS} />}
-				{drawerTab === 'configuration' && (
+				{drawerError && (
+					<Typography sx={{ fontSize: 'body2.fontSize', color: 'error.main' }}>{drawerError}</Typography>
+				)}
+				{drawerTab === 'ingestion' && <IngestionSection runs={drawerRuns} />}
+				{drawerTab === 'configuration' && entry && (
 					<ConfigurationSection
+						entry={entry}
+						detail={drawerDetail}
 						scope={scope}
 						syncFrequency={syncFrequency}
 						onToggleScopeItem={toggleScopeItem}
 						onChangeSyncFrequency={setSyncFrequency}
 					/>
 				)}
-				{drawerTab === 'data' && <DataSection stats={SOURCE_DATA_STATS} items={INDEXED_ITEMS} />}
+				{drawerTab === 'data' && (
+					<DataSection stats={toDataStats(drawerDetail)} items={toIndexedItems(drawerResources)} />
+				)}
 			</StyledDrawerBody>
 		</StyledSourceDrawer>
 	);
