@@ -12,3 +12,10 @@ export const CHAT_ANSWER_STATUS = {
 } as const;
 
 export type ChatAnswerStatusType = (typeof CHAT_ANSWER_STATUS)[keyof typeof CHAT_ANSWER_STATUS];
+
+export const MESSAGE_ROLE = {
+	User: 'USER',
+	Assistant: 'ASSISTANT',
+} as const;
+
+export type MessageRoleType = (typeof MESSAGE_ROLE)[keyof typeof MESSAGE_ROLE];

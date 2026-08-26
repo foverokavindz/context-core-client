@@ -1,23 +1,22 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { chatService } from '../../../services/Chat.service';
 import { CHAT_LLM_CONFIG, NEW_CHAT_TITLE } from '../../../configs/chat.configs';
 import { CURRENT_USER } from '../../../configs/user.configs';
 import { CHAT_ANSWER_STATUS } from '../../../types/common.types';
+import { toChatTurns, toConversationSummary, truncateTitle } from '../chat.mappers';
 import type { ChatConversationSummary, ChatTurn } from '../chat.types';
 
-const TITLE_TRUNCATE_LENGTH = 48;
 const GENERIC_ERROR = 'Something went wrong while answering that question.';
-
-function truncateTitle(text: string): string {
-  return text.length > TITLE_TRUNCATE_LENGTH ? `${text.slice(0, TITLE_TRUNCATE_LENGTH - 1)}…` : text;
-}
+const HISTORY_ERROR = 'Could not load your chat history.';
 
 interface ChatContextValue {
   activeConv: string | null;
   conversations: ChatConversationSummary[];
   turns: ChatTurn[];
   historyCollapsed: boolean;
+  historyLoading: boolean;
+  historyError: string | null;
   creatingSession: boolean;
   sessionError: string | null;
   sending: boolean;
@@ -36,6 +35,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
   const [historyCollapsed, setHistoryCollapsed] = useState(true);
   const [conversations, setConversations] = useState<ChatConversationSummary[]>([]);
   const [turnsBySession, setTurnsBySession] = useState<Record<string, ChatTurn[]>>({});
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyError, setHistoryError] = useState<string | null>(null);
   const [creatingSession, setCreatingSession] = useState(false);
   const [sessionError, setSessionError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -49,6 +50,28 @@ export function ChatProvider({ children }: { children: ReactNode }) {
       [sessionId]: (prev[sessionId] ?? []).map((turn) => (turn.id === turnId ? { ...turn, ...patch } : turn)),
     }));
   };
+
+  const fetchChatHistory = async () => {
+    setHistoryError(null);
+    setHistoryLoading(true);
+    const response = await chatService.GetChatHistory(CURRENT_USER.userId);
+    if (response.success && response.data) {
+      const sessions = response.data;
+      setConversations(sessions.map(toConversationSummary));
+      setTurnsBySession((prev) => ({
+        ...Object.fromEntries(sessions.map((session) => [session.chat_session_id, toChatTurns(session)])),
+        ...prev,
+      }));
+    } else {
+      console.error('Get Chat History Error:', response.message);
+      setHistoryError(response.error ?? response.message ?? HISTORY_ERROR);
+    }
+    setHistoryLoading(false);
+  };
+
+  useEffect(() => {
+    fetchChatHistory();
+  }, []);
 
   const startNewChat = async () => {
     setSessionError(null);
@@ -112,6 +135,8 @@ export function ChatProvider({ children }: { children: ReactNode }) {
     conversations,
     turns,
     historyCollapsed,
+    historyLoading,
+    historyError,
     creatingSession,
     sessionError,
     sending,

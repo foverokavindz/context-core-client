@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -57,6 +58,19 @@ export const StyledConversationItemButton = styled(Button, {
 export const StyledEmptyHistoryText = styled(Typography)(({ theme }) => ({
   fontSize: theme.tokens.fontSize.md,
   color: theme.palette.text.secondary,
+  lineHeight: 1.5,
+  paddingLeft: theme.spacing(0.5),
+}));
+
+export const StyledHistoryStatusBox = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  padding: theme.spacing(2),
+}));
+
+export const StyledHistoryErrorText = styled(Typography)(({ theme }) => ({
+  fontSize: theme.tokens.fontSize.md,
+  color: theme.palette.error.main,
   lineHeight: 1.5,
   paddingLeft: theme.spacing(0.5),
 }));

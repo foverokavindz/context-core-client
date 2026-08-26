@@ -1,6 +1,4 @@
-import type { ChatSourceType } from './common.types';
-
-// Field names mirror the API payload, so they stay snake_case.
+import type { ChatSourceType, MessageRoleType } from './common.types';
 
 export interface ChatSession {
 	chat_session_id: string;
@@ -62,4 +60,20 @@ export interface ChatAnswer {
 	answer: string;
 	sources: ChatSource[];
 	retrieval: ChatRetrieval | null;
+}
+
+export interface ChatHistoryMessage {
+	message_id: string;
+	role: MessageRoleType;
+	content: string;
+	created_at: string;
+	updated_at: string;
+}
+
+export interface ChatHistorySession {
+	chat_session_id: string;
+	title: string | null;
+	created_at: string;
+	updated_at: string;
+	messages: ChatHistoryMessage[];
 }
