@@ -21,6 +21,7 @@ import {
   StyledUpgradeLink,
   StyledAvatarBox,
 } from './styled/NavSidebar.styled.component';
+import logoSqure from "../assets/logo.png"
 
 const INDEXED_PCT = 64;
 const INDEXED_LABEL = '128,450 of 200,000 items';
@@ -33,7 +34,7 @@ function NavSidebar() {
   return (
     <StyledSidebarRoot component="aside" collapsed={collapsed}>
       <StyledHeaderStack direction="row" spacing={1.25}>
-        <StyledLogoBox>C</StyledLogoBox>
+        <img src={logoSqure} alt="Context Logo" style={{ height: 30, width: 'auto' }} />
         {!collapsed && (
           <StyledTitleTypography noWrap sx={{ color: 'text.primary' }}>
             Context Core
